@@ -16,7 +16,6 @@ dist-server/
 # Variables de entorno
 .env
 .env.local
-src/environments/environment.prod.ts
 
 # Testing
 coverage/
