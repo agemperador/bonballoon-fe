@@ -1,0 +1,121 @@
+<app-header></app-header>
+<div class="cart-panel" *ngIf="showCart">
+  <h3>Carrito</h3>
+  <div *ngIf="cart.length===0">El carrito está vacío</div>
+  <div class="cart-item" *ngFor="let item of cartDetails">
+    <div class="ci-left">
+      <div class="ci-name">{{item.name}}</div>
+      <div class="ci-qty">Cantidad: {{item.quantity}}</div>
+    </div>
+    <div class="ci-right">
+      <div class="ci-price">${{item.price}}</div>
+      <button class="btn btn-outline" (click)="removeItem(item.product_id)">Quitar</button>
+    </div>
+  </div>
+  <div class="cart-total">Total: ${{cartTotal}}</div>
+  <div style="margin-top:12px">
+    <button class="btn btn-primary" (click)="checkout()">Pagar / Enviar pedido</button>
+  </div>
+</div>
+
+<div class="orders-panel" *ngIf="showOrders">
+  <h3>Mis pedidos</h3>
+  <div class="orders-search">
+    <input type="email" [(ngModel)]="ordersEmail" placeholder="Tu email" [disabled]="loadingOrders" />
+    <button class="btn btn-primary" (click)="getOrders()" [disabled]="loadingOrders">
+      {{ loadingOrders ? 'Buscando...' : 'Buscar' }}
+    </button>
+  </div>
+  <p class="orders-error" *ngIf="ordersError">{{ ordersError }}</p>
+  <div *ngIf="orders.length > 0" class="orders-list">
+    <div class="order-item" *ngFor="let order of orders">
+      <div class="order-header">
+        <div class="order-id">Pedido #{{order.id}}</div>
+        <div class="order-total">${{order.total}}</div>
+      </div>
+      <div class="order-email">{{order.email}}</div>
+      <div class="order-items">
+        <div class="order-item-detail" *ngFor="let item of order.items">
+          - {{item.quantity}}x Producto #{{item.product_id}} - ${{item.price}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-hero (primaryAction)="createMocks()"></app-hero>
+<main class="container">
+  <section class="create-product">
+    <h2>Crear producto</h2>
+    <div class="form-grid">
+      <label>
+        Nombre
+        <input type="text" [(ngModel)]="productForm.name" placeholder="Bouquet Primavera" />
+      </label>
+      <label>
+        Precio
+        <input type="number" min="0" step="0.01" [(ngModel)]="productForm.price" />
+      </label>
+      <label>
+        Stock
+        <input type="number" min="0" step="1" [(ngModel)]="productForm.stock" />
+      </label>
+      <label>
+        Category ID (opcional)
+        <input type="number" min="1" step="1" [(ngModel)]="productForm.category_id" />
+      </label>
+      <label class="full-width">
+        Descripción
+        <textarea rows="3" [(ngModel)]="productForm.description" placeholder="Detalle del producto"></textarea>
+      </label>
+      <label class="full-width">
+        Imagen
+        <input type="file" accept="image/*" (change)="onProductImageSelected($event)" />
+      </label>
+    </div>
+    <button class="btn btn-primary" [disabled]="creatingProduct" (click)="createProduct()">
+      {{ creatingProduct ? 'Creando...' : 'Crear producto' }}
+    </button>
+  </section>
+
+  <section class="featured">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h2>Productos</h2>
+      <div>
+        <button class="btn btn-outline" (click)="createMocks()">Generar 10 mocks</button>
+        <button class="btn btn-outline" style="margin-left:12px" (click)="toggleOrders()">{{ showOrders ? 'Cerrar' : 'Mis' }} Pedidos</button>
+        <button class="btn btn-primary" style="margin-left:12px" (click)="checkout()">Checkout</button>
+      </div>
+    </div>
+    <app-product-list [products]="products" [loading]="loading" (addToCart)="addToCart($event)"></app-product-list>
+  </section>
+</main>
+
+<div class="checkout-modal-overlay" *ngIf="showCheckoutModal" (click)="closeCheckoutModal()">
+  <section class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title" (click)="$event.stopPropagation()">
+    <h3 id="checkout-title">Finalizar pedido</h3>
+    <p class="checkout-copy">Dejanos tu email y te enviamos el detalle del pedido.</p>
+
+    <label class="checkout-label" for="checkout-email" *ngIf="!checkoutSuccess">Email</label>
+    <input
+      *ngIf="!checkoutSuccess"
+      id="checkout-email"
+      type="email"
+      class="checkout-input"
+      [(ngModel)]="checkoutEmail"
+      [disabled]="checkoutSending || !!checkoutSuccess"
+      placeholder="cliente@correo.com"
+    />
+
+    <p class="checkout-error" *ngIf="checkoutError">{{ checkoutError }}</p>
+    <p class="checkout-success" *ngIf="checkoutSuccess">{{ checkoutSuccess }}</p>
+
+    <div class="checkout-actions">
+      <button class="btn btn-outline" (click)="closeCheckoutModal()" [disabled]="checkoutSending">Cancelar</button>
+      <button class="btn btn-primary" (click)="submitCheckout()" [disabled]="checkoutSending || !!checkoutSuccess || cart.length===0">
+        {{ checkoutSending ? 'Enviando...' : 'Enviar pedido' }}
+      </button>
+    </div>
+  </section>
+</div>
+
+<app-footer></app-footer>

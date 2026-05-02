@@ -1,0 +1,13 @@
+<article class="product">
+  <div class="thumb" *ngIf="product?.image; else noImage">
+    <img [src]="product.image" [alt]="product?.name || 'Producto'" loading="lazy" />
+  </div>
+  <ng-template #noImage>
+    <div class="thumb">Sin imagen</div>
+  </ng-template>
+  <h3>{{ product.name }}</h3>
+  <p class="price">$ {{ product.price }}</p>
+  <div style="margin-top:auto">
+    <button class="btn btn-primary" (click)="add.emit(product)">Agregar</button>
+  </div>
+</article>

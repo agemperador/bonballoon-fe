@@ -1,0 +1,5 @@
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="!loading && (!products || products.length===0)">No hay productos</div>
+<div class="grid" *ngIf="!loading">
+  <app-product-card *ngFor="let p of products" [product]="p" (add)="addToCart.emit($event)"></app-product-card>
+</div>

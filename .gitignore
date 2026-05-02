@@ -1,0 +1,40 @@
+# Dependencias Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+package-lock.json
+
+# Output de build
+dist/
+dist-server/
+
+# Angular cache
+.angular/
+
+# Variables de entorno
+.env
+.env.local
+src/environments/environment.prod.ts
+
+# Testing
+coverage/
+.nyc_output/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

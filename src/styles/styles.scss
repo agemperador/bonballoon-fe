@@ -1,0 +1,32 @@
+@import '_palette';
+
+body { background: $bg-base; color: $text-main-dark; font-family: Inter, system-ui, Arial, sans-serif; }
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+.topbar{background:$bg-light;border-bottom:1px solid $border-soft}
+.topbar-inner{display:flex;align-items:center;gap:16px;height:64px}
+.brand{font-weight:700;color:$text-main-dark;font-size:1.25rem}
+.nav{margin-left:12px;display:flex;gap:12px}
+.nav a{color:$text-secondary-dark;text-decoration:none}
+.actions{margin-left:auto}
+
+.btn{cursor:pointer;border-radius:8px;padding:8px 14px;border:1px solid transparent;font-weight:600}
+.btn-primary{background:$color-primary;color:$bg-light;border:1px solid $btn-border}
+.btn-outline{background:transparent;border:1px solid $border-soft;color:$text-main-dark}
+.btn-ghost{background:transparent;color:$text-main-dark;border:1px solid transparent}
+
+.hero{padding:48px 0;background:linear-gradient(120deg,$hero-grad 0%, $hero-pink-lilac 100%)}
+.hero-inner{display:flex;align-items:center;gap:24px}
+.hero-text{flex:1}
+.card-hero{height:220px;background:$bg-warm;border-radius:12px;border:1px solid $card-border;display:flex;align-items:center;justify-content:center;color:$text-secondary-dark}
+
+.featured{padding:40px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.product{background:$bg-light;border:1px solid $card-border;padding:12px;border-radius:10px;display:flex;flex-direction:column;gap:10px}
+.thumb{height:140px;background:linear-gradient(180deg,$bg-light,#fff);border-radius:8px;display:flex;align-items:center;justify-content:center;color:$text-secondary-dark}
+.price{color:$text-secondary-dark;font-weight:700}
+
+.footer{border-top:1px solid $border-soft;margin-top:40px;background:transparent}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;padding:18px 0;color:$text-secondary-dark}
+
+@media(max-width:880px){.hero-inner{flex-direction:column}.hero-image{width:100%}}
